@@ -2,7 +2,7 @@
 import random
 
 interests = []
-symbols = ['.','#','-']
+symbols = ['!','#','@', '&']
 
 
 
@@ -11,19 +11,16 @@ with open('interests.txt') as interests_doc:
     for i in range(len(interests)-1):
         interests[i] = interests[i][:-1]        
 
-def generate_passwords():
-    # Generate Random Items
+def generate_password(length):
     rand_interest = random.choice(interests)
     rand_symbol = random.choice(symbols)
-    two_digit = random.randint(10,99)
-    four_digit = random.randint(1000,9999)
-    six_digit = random.randint(100000, 999999)
-    # Create 3 Unique Passwords
-    two_digit_password = f"{rand_interest}{rand_symbol}{two_digit}"
-    four_digit_password = f"{rand_interest}{rand_symbol}{four_digit}"
-    six_digit_password = f"{rand_interest}{rand_symbol}{six_digit}"
-
-    return two_digit_password, four_digit_password, six_digit_password
+    password_length = len(rand_interest) + 1
+    if password_length > int(length): digit_len = 2
+    else: digit_len = pow(10,(int(length) - password_length))
+    print(digit_len)
+    random_numbers = random.randint(digit_len,digit_len*9)
+    new_password = f"{rand_interest}{rand_symbol}{random_numbers}"
+    return new_password
 
 is_running = True
 
@@ -31,12 +28,10 @@ is_running = True
 print('Random Generated Passwords')
 while is_running:
     print('---------------------------')
-    pass1, pass2, pass3 = generate_passwords()
-    print(pass1)
-    print(pass2)
-    print(pass3)
+    length = input("Enter Password Length: ")
+    print(generate_password(length))
     user_input = input('Press Enter to Generate 3 more, type "q" to quit: ')
     if not user_input == '':
-        is_running = False
+        quit(0)
 
 
