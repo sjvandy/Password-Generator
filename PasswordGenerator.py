@@ -1,11 +1,11 @@
 # Passowrd Generator
 import random
+from tkinter import *
 
 interests = []
-symbols = ['!','#','@', '&']
+symbols = []
 
-
-
+# Grab Interests from file
 with open('interests.txt') as interests_doc:
     interests = interests_doc.readlines()
     for i in range(len(interests)-1):
@@ -22,16 +22,21 @@ def generate_password(length):
     new_password = f"{rand_interest}{rand_symbol}{random_numbers}"
     return new_password
 
-is_running = True
+root = Tk()
+root.title('Password Generator')
+root.geometry("400x400")
 
-# Mobile Friendly
-print('Random Generated Passwords')
-while is_running:
-    print('---------------------------')
-    length = input("Enter Password Length: ")
-    print(generate_password(length))
-    user_input = input('Press Enter to Generate 3 more, type "q" to quit: ')
-    if not user_input == '':
-        quit(0)
+title_label = Label(root, text="Password Generator", font=("Helvetica", 16))
+desc_label = Label(root, text="Enter a length and press enter to generate a password", font=("Helvetica", 12))
+
+title_label.pack()
+desc_label.pack()
+
+length = input("Enter Password Length: ")
+print(generate_password(length))
+user_input = input('Press Enter to Generate 3 more, type "q" to quit: ')
+if not user_input == '':
+    quit(0)
 
 
+root.mainloop()
