@@ -11,32 +11,45 @@ with open('interests.txt') as interests_doc:
     for i in range(len(interests)-1):
         interests[i] = interests[i][:-1]        
 
-def generate_password(length):
+def generate_password():
+    length = len_entry.get()
     rand_interest = random.choice(interests)
-    rand_symbol = random.choice(symbols)
+    rand_symbol = random.choice(symbol_entry.get())
     password_length = len(rand_interest) + 1
     if password_length > int(length): digit_len = 2
     else: digit_len = pow(10,(int(length) - password_length))
-    print(digit_len)
     random_numbers = random.randint(digit_len,digit_len*9)
-    new_password = f"{rand_interest}{rand_symbol}{random_numbers}"
-    return new_password
+    generated_password = f"{rand_interest}{rand_symbol}{random_numbers}"
+    new_password.config(text=generated_password)
+    
+    
 
 root = Tk()
 root.title('Password Generator')
 root.geometry("400x400")
+root.resizable(False, False)
 
-title_label = Label(root, text="Password Generator", font=("Helvetica", 16))
-desc_label = Label(root, text="Enter a length and press enter to generate a password", font=("Helvetica", 12))
+center_frame = Frame(root)
+center_frame.pack(expand=True, side='top', anchor='n')
 
-title_label.pack()
-desc_label.pack()
+# Widgets
+title_label = Label(center_frame, text="Password Generator", font=("Helvetica", 16))
+len_entry = Entry(center_frame)
+len_label = Label(center_frame, text="Enter Password Length", font=("Helvetica", 12), justify='right')
+symbol_lbl = Label(center_frame, text="Enter Symbols", font=("Helvetica", 12), justify='right')
+symbol_entry = Entry(center_frame)
+enter_button = Button(center_frame, text="Generate", command=generate_password)
+new_password = Label(center_frame, text="", font=("Helvetica", 20), justify='center')
 
-length = input("Enter Password Length: ")
-print(generate_password(length))
-user_input = input('Press Enter to Generate 3 more, type "q" to quit: ')
-if not user_input == '':
-    quit(0)
+# Grid Layout
+title_label.grid(row=0, column=0, columnspan=2, pady=10)  # spans two columns
+len_label.grid(row=1, column=0, pady=10)  # placed at row 1, column 0
+len_entry.grid(row=1, column=1)  # placed at row 1, column 1
+symbol_lbl.grid(row=2, column=0, pady=10)  # placed at row 1, column 0
+symbol_entry.grid(row=2, column=1)  # placed at row 1, column 1
+enter_button.grid(row=4, column=0, columnspan=2, pady=20)  # placed at row 1, column 1)
+new_password.grid(row=5, column=0, columnspan=2, pady=20)
+
 
 
 root.mainloop()
