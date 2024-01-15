@@ -22,6 +22,5 @@ dist/PasswordGenerator.app/Contents/Info.plist
 dist/PasswordGenerator.app/Contents/_CodeSignature/CodeResources
 dist/PasswordGenerator.app/Contents/MacOS/PasswordGenerator
 dist/PasswordGenerator.app/Contents/Resources/icon-windowed.icns
-interests.txt
 __pycache__/password_logic.cpython-312.pyc
 __pycache__/PasswordGenerator.cpython-312.pyc
