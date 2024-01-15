@@ -1,12 +1,19 @@
 # Passowrd Generator
 import random
 from tkinter import *
+import sys
+import os
 
 interests = []
 symbols = []
 
+if getattr(sys, 'frozen', False):
+    interests_file = os.path.join(sys._MEIPASS, 'interests.txt')
+else:
+    interests_file = 'interests.txt'
+
 # Grab Interests from file
-with open('interests.txt') as interests_doc:
+with open(interests_file) as interests_doc:
     interests = interests_doc.readlines()
     for i in range(len(interests)-1):
         interests[i] = interests[i][:-1]        
@@ -33,7 +40,6 @@ root.title('Password Generator')
 root.geometry("400x400")
 root.resizable(False, False)
 
-
 center_frame = Frame(root)
 center_frame.pack(expand=True, side='top', anchor='n')
 scrollbar = Scrollbar(center_frame)
@@ -58,7 +64,5 @@ symbol_lbl.grid(row=2, column=0, pady=10)  # placed at row 1, column 0
 symbol_entry.grid(row=2, column=1)  # placed at row 1, column 1
 generate_button.grid(row=4, column=0, columnspan=2, pady=20)  # placed at row 1, column 1)
 new_password.grid(row=5, column=0, columnspan=2)  
-
-
 
 root.mainloop()
