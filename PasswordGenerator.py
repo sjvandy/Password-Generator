@@ -13,10 +13,12 @@ else:
     interests_file = 'interests.txt'
 
 # Grab Interests from file
-with open(interests_file) as interests_doc:
-    interests = interests_doc.readlines()
-    for i in range(len(interests)-1):
-        interests[i] = interests[i][:-1]        
+def update_interests():
+    global interests    
+    with open(interests_file) as interests_doc:
+        interests = interests_doc.readlines()
+        for i in range(len(interests)-1):
+            interests[i] = interests[i][:-1]        
 
 def generate_password():
     length = len_entry.get()
@@ -35,14 +37,27 @@ def copy_to_clipboard(event):
     copy_lbl.grid(row=6, column=0, columnspan=2)
     root.after(1000, copy_lbl.grid_forget)
 
+def edit_interests():
+    os.system('open ' + interests_file)
+
 root = Tk()
 root.title('Password Generator')
 root.geometry("400x400")
 root.resizable(False, False)
 
+# Menu
+menu = Menu(root)
+root.config(menu=menu)
+
+file_menu = Menu(menu)
+menu.add_cascade(label="File", menu=file_menu)
+file_menu.add_command(label="Edit Interests", command=edit_interests)
+file_menu.add_command(label="Refresh Interests", command=update_interests)
+
+
+# Frame
 center_frame = Frame(root)
 center_frame.pack(expand=True, side='top', anchor='n')
-scrollbar = Scrollbar(center_frame)
 
 # Frame Widgets
 title_label = Label(center_frame, text="Password Generator", font=("Helvetica", 16))
@@ -65,4 +80,5 @@ symbol_entry.grid(row=2, column=1)  # placed at row 1, column 1
 generate_button.grid(row=4, column=0, columnspan=2, pady=20)  # placed at row 1, column 1)
 new_password.grid(row=5, column=0, columnspan=2)  
 
+update_interests()
 root.mainloop()
